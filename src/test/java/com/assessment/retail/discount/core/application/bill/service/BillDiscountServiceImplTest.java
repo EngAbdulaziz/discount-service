@@ -15,8 +15,6 @@ import org.mockito.MockitoAnnotations;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.assessment.retail.discount.entrypoint.rest.bill.dto.DiscountConstants.DISCOUNT_STRATEGY_PREFIX;
-import static com.assessment.retail.discount.entrypoint.rest.bill.dto.DiscountConstants.EMPLOYEE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -38,8 +36,6 @@ class BillDiscountServiceImplTest {
     @BeforeEach
     void init() {
         MockitoAnnotations.openMocks(this);
-
-        discountStrategies.put(EMPLOYEE + DISCOUNT_STRATEGY_PREFIX, employeeDiscountStrategy);
 
         discountService = new BillDiscountServiceImpl(itemPersistenceService, discountStrategies);
     }
