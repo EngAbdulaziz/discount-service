@@ -15,11 +15,11 @@ You should also have docker engine and docker-compose:
 
 ## Getting Started:
 
-Clone repository and checkout "main" branch.
+Clone repository and checkout "feature/apply-spring-security" branch.
 
 ## To run the application:
 
-Go to project root. you should see pom.xml and docker-compose.yml
+Go to project root directory, you should see pom.xml and docker-compose.yml
 
 Run below commands:
 
@@ -35,11 +35,43 @@ Then run :
 
 This you will have 2 containers up and running. One for Mongo and one for the discount service.
 
-## Try discount service:
+## To use discount service:
 
-You can access the application endpoint on port 8080. You can use below curl:
+You should first create user (sign up) using : `/api/auth/signup`
 
-    curl --location --request POST 'localhost:8080/v1/bill/discount' \
+User should be "**admin**" or "**moderator**" to ba able to access discount API
+
+You can use below curl:
+
+    curl --location --request POST 'localhost:8081/api/auth/signup' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+    "username":"zizo",
+    "email":"zizo@gmail.com",
+    "password":"zizo1234",
+    "roles" : [
+    "admin"
+    ]
+    }
+    '
+
+Then you should log in and get the access token using `/api/auth/signin`
+
+You can use below curl for login:
+
+    curl --location --request POST 'localhost:8081/api/auth/signin' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+    "username": "zizo",
+    "password": "zizo1234"
+    }'
+
+Then You can use the bearer token to access the discount endpoint.
+
+You can use below curl:
+
+    curl --location --request POST 'localhost:8081/v1/bill/discount' \
+    --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ6aXpvIiwiaWF0IjoxNjYyMjQyNjMwLCJleHAiOjE2NjIzMjkwMzB9.1TWN3i9UCTTng6SctTklWrofpQCkDH8ho7xfW8K0Vjj3BdUji_rXu4EPrNrvcunCg__DZ_Ky2nmQgT_y_k5ndQ' \
     --header 'Content-Type: application/json' \
     --data-raw '{
     "userTye":"C2Y",
