@@ -25,30 +25,27 @@ public class BillDiscountServiceImpl implements BillDiscountService {
         /*Since there is no specific requirement for which discount user should get
             if he is eligible for more than one discount, so we will choose the smaller amount*/
 
-        final int numOfHundredUSDinAmount = (int) model.getBillOriginalAmount() / 100;
+        final int numOfHundredUSDinAmount = (int) (model.getBillOriginalAmount() / 100);
         final int amountBasedDiscount = numOfHundredUSDinAmount * 5;
 
         model.setBillNetPayableAmount(model.getBillOriginalAmount() - amountBasedDiscount);
         model.setBillDiscountPercentage((float) (amountBasedDiscount / model.getBillOriginalAmount()) * 100);
         model.setBillDiscountDescription("5$ for each 100$");
 
-        if (!itemPersistenceService.isItemGrocery(model.getItemUuid())) {
+        if (!itemPersistenceService.isItemGrocery(model.getItemUuid())
+                && StringUtils.isNotBlank(model.getUserTye())) {
 
-            DiscountModel userTypeDiscount;
+            final DiscountModel userTypeDiscount = discountStrategies.get(model.getUserTye().concat(DISCOUNT_STRATEGY_PREFIX))
+                    .getDiscount(model);
 
-            if (StringUtils.isNotBlank(model.getUserTye())) {
+            double percentageBasedDiscount = (userTypeDiscount.getDiscountPercentage() * model.getBillOriginalAmount()) / 100;
 
-                userTypeDiscount = discountStrategies.get(model.getUserTye().concat(DISCOUNT_STRATEGY_PREFIX))
-                        .getDiscount(model);
-
-                double percentageBasedDiscount = (userTypeDiscount.getDiscountPercentage() * model.getBillOriginalAmount()) / 100;
-
-                if (percentageBasedDiscount < amountBasedDiscount) {
-                    model.setBillNetPayableAmount(model.getBillOriginalAmount() - percentageBasedDiscount);
-                    model.setBillDiscountPercentage(userTypeDiscount.getDiscountPercentage());
-                    model.setBillDiscountDescription(userTypeDiscount.getDiscountType());
-                }
+            if (percentageBasedDiscount < amountBasedDiscount) {
+                model.setBillNetPayableAmount(model.getBillOriginalAmount() - percentageBasedDiscount);
+                model.setBillDiscountPercentage(userTypeDiscount.getDiscountPercentage());
+                model.setBillDiscountDescription(userTypeDiscount.getDiscountType());
             }
+
         }
         return model;
     }

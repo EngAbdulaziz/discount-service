@@ -13,9 +13,9 @@ import java.util.UUID;
 public class BillModel {
 
     private String userTye;
-    private double billOriginalAmount;
+    private Double billOriginalAmount;
     private UUID itemUuid;
     private Float billDiscountPercentage;
-    private double billNetPayableAmount;
+    private Double billNetPayableAmount;
     private String billDiscountDescription;
 }

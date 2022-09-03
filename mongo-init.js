@@ -25,7 +25,7 @@ db.getCollection("discount").insertMany([
     {
         _id: 2,
         discount_uuid: "47b549e9-46c9-4c9f-83ae-6a68a825433d",
-        discount_type: "Store affiliate discount",
+        discount_type: "Affiliate discount",
         discount_percentage: 10
     },
     {
