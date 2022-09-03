@@ -1,7 +1,11 @@
 package com.assessment.retail.discount.core.domain.discount;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.UUID;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DiscountModelInstanceProvider {
 
     public static DiscountModel getEmployeeDiscountModel() {
