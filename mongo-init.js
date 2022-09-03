@@ -57,3 +57,10 @@ db.getCollection("item").insertMany([
         is_grocery: false
     }
 ]);
+
+db.createCollection("roles", {capped: false});
+db.getCollection("roles").insertMany([
+    {name: "ROLE_USER"},
+    {name: "ROLE_MODERATOR"},
+    {name: "ROLE_ADMIN"},
+])

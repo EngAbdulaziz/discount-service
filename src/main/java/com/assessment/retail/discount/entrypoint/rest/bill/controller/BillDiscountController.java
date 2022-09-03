@@ -7,6 +7,7 @@ import com.assessment.retail.discount.entrypoint.rest.bill.dto.BillDiscountReque
 import com.assessment.retail.discount.entrypoint.rest.bill.dto.BillDiscountResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ public class BillDiscountController {
     private final BillDiscountService billDiscountService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public ResponseEntity<BillDiscountResponseDto> getBillPayableAmountAfterDiscount
             (@RequestBody @Valid final BillDiscountRequestDto billDiscountRequestDto) {
 
