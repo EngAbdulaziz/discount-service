@@ -1,10 +1,11 @@
 package com.assessment.retail.discount.infrastructure.security.model;
 
+import com.assessment.retail.discount.infrastructure.auditing.Auditable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "roles")
-public class Role {
+public class Role extends Auditable {
     @Id
     private String id;
 

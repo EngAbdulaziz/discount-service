@@ -1,5 +1,6 @@
 package com.assessment.retail.discount.infrastructure.security.model;
 
+import com.assessment.retail.discount.infrastructure.auditing.Auditable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Document(collection = "users")
-public class User {
+public class User extends Auditable {
     @Id
     private String id;
 
