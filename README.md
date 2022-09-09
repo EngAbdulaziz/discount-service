@@ -33,7 +33,7 @@ Then run :
 
     docker-compose up --build
 
-This you will have 2 containers up and running. One for Mongo and one for the discount service.
+Then you will have 2 containers up and running. One for Mongo and one for the discount service.
 
 ## To use discount service:
 
